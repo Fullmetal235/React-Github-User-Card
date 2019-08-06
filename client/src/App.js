@@ -2,25 +2,57 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
+import UserCard from './components/userCard.js'
+
+class App extends React.Component {
+  constructor(){
+    super();
+    this.state = { 
+      user: {},
+      followers: []
+  }
+  }
+
+  componentDidMount(){
+    this.fetchUsers()
+    this.fetchFollowers()
+  }
+
+fetchUsers = () => {
+  fetch('https://api.github.com/users/hannahtuttle')
+  .then(response => {
+    return response.json()
+  })
+  .then(response => {
+    //if(response === null){}
+    return this.setState({user: response}),
+    console.log('this.state.user', this.state.user)
+    })
+  .catch((err) => 
+    console.log(err))
+}
+
+fetchFollowers = () => {
+  fetch('https://api.github.com/users/hannahtuttle/followers')
+  .then(response => {
+    return response.json()
+  })
+  .then(response => {
+    return this.setState({followers: response}),
+    console.log("followers",this.state.followers)
+  })
+  .catch(err => console.log('error with followers api', err))
+}
+
+  render(){
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <UserCard user={this.state.user}/>
+      {this.state.followers.map(person => 
+        <UserCard user={person}/>
+      )}
     </div>
   );
-}
+}}
 
 export default App;
