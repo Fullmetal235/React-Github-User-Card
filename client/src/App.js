@@ -19,7 +19,7 @@ class App extends React.Component {
   }
 
 fetchUsers = () => {
-  fetch('https://api.github.com/users/hannahtuttle')
+  fetch('https://api.github.com/users/Fullmetal235')
   .then(response => {
     return response.json()
   })
@@ -33,7 +33,7 @@ fetchUsers = () => {
 }
 
 fetchFollowers = () => {
-  fetch('https://api.github.com/users/hannahtuttle/followers')
+  fetch('https://api.github.com/users/Fullmetal235/followers')
   .then(response => {
     return response.json()
   })
